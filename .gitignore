@@ -6,3 +6,4 @@ obj/
 *.suo
 *.DotSettings.user
 .env
+.claude.local.md
