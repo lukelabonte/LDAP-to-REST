@@ -17,11 +17,11 @@ A cross-platform REST API that wraps Active Directory LDAP operations (user/grou
 ## Quick Start
 
 ```bash
-docker run -p 8080:8080 \
-  -e LDAP_HOST=dc01.example.com \
-  -e LDAP_BASE_DN="DC=example,DC=com" \
-  -e LDAP_USE_SSL=false \
-  ldap-to-rest
+# 1. Copy the example env file and fill in your AD details
+cp .env.example .env
+
+# 2. Build and run
+docker compose up --build
 ```
 
 ## Configuration
@@ -180,17 +180,18 @@ LDAP_HOST=dc01.example.com LDAP_BASE_DN="DC=example,DC=com" \
 ## Docker
 
 ```bash
-# Build image
-docker build -t ldap-to-rest .
+# Copy env file and configure
+cp .env.example .env
+# Edit .env with your AD server details
 
-# Run
+# Build and run
+docker compose up --build
+
+# Or run directly with docker
 docker run -p 8080:8080 \
   -e LDAP_HOST=dc01.example.com \
   -e LDAP_BASE_DN="DC=example,DC=com" \
   ldap-to-rest
-
-# Or use docker-compose
-docker compose up
 ```
 
 ## Security Considerations
