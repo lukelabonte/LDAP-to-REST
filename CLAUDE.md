@@ -11,6 +11,19 @@
 - `tests/LdapToRest.Tests/` — Unit tests (mock `ILdapConnection`, not real LDAP)
 - Swashbuckle pinned to `6.9.*` (10.x incompatible with .NET 8's `Microsoft.OpenApi.Models`)
 - `Microsoft.AspNetCore.Mvc.Testing` pinned to `8.0.*` (latest targets .NET 10)
+- Swagger docs sourced from XML doc comments (`/// <summary>`) — requires `GenerateDocumentationFile` in csproj + `IncludeXmlComments()` in Program.cs
+
+## GitHub
+- Releases: push a `v*` tag → CI tests, builds Docker image, pushes to ghcr.io, creates GitHub Release
+- Issue templates in `.github/ISSUE_TEMPLATE/` — blank issues disabled
+
+## When Changing Endpoints or Attributes
+When adding, removing, or modifying any API endpoint or modifiable attribute:
+1. Update XML doc comments on the controller action (`/// <summary>`, `/// <param>`, `/// <response>`, `[ProducesResponseType]`)
+2. Update the README API Reference section with curl examples
+3. Update any affected DTO model doc comments
+4. If adding/changing env vars, update the README Configuration table and `.env.example`
+5. Verify Swagger renders correctly at `/swagger` after changes
 
 ## Architecture
 - Pass-through Basic Auth: each request binds to AD with the caller's own credentials (no service account)

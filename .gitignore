@@ -1,9 +1,44 @@
+# .NET build output
 bin/
 obj/
+
+# Visual Studio
 .vs/
-.vscode/
 *.user
 *.suo
 *.DotSettings.user
+
+# JetBrains Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS Finder metadata
+.DS_Store
+
+# Editor swap/backup files
+*.swp
+*.swo
+*~
+
+# Environment variables (contains LDAP credentials and server details)
 .env
+
+# Claude Code
+# Local settings and session data — per-developer, not shared.
+# Shared project config (e.g. .claude/settings.json) can still be checked in.
+.claude/*.json
+!.claude/settings.json
 .claude.local.md
+
+# NuGet packages (restored on build)
+*.nupkg
+*.snupkg
+
+# Test results
+TestResults/
+*.trx
+
+# Log files
+*.log
