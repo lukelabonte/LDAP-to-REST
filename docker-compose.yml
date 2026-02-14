@@ -1,0 +1,12 @@
+services:
+  ldap-to-rest:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - LDAP_HOST=dc01.example.com
+      - LDAP_PORT=389
+      - LDAP_BASE_DN=DC=example,DC=com
+      - LDAP_USE_SSL=false
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,https://app.example.com
+    restart: unless-stopped
