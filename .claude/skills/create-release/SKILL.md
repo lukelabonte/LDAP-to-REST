@@ -126,9 +126,10 @@ Tell the user: "Tag pushed. The release workflow is now running — it will buil
 ## Step 10: Update GitHub Release with Curated Notes
 
 1. Wait a moment for the release to be created by the workflow
-2. Build the release body from the curated notes + a link to the CHANGELOG section
-3. Update the release: `gh release edit vX.Y.Z --notes "..."` (using HEREDOC)
-4. Confirm: "Release vX.Y.Z is live at https://github.com/lukelabonte/LDAP-to-REST/releases/tag/vX.Y.Z"
+2. Use WebFetch to load `https://github.com/lukelabonte/LDAP-to-REST/releases` and review the formatting of existing releases for consistency
+3. Build the release body: Docker pull command at the top (`docker pull ghcr.io/lukelabonte/ldap-to-rest:X.Y.Z`), then curated notes, then a link to the CHANGELOG section — match the style of existing releases
+4. Update the release: `gh release edit vX.Y.Z --notes "..."` (using HEREDOC)
+5. Confirm: "Release vX.Y.Z is live at https://github.com/lukelabonte/LDAP-to-REST/releases/tag/vX.Y.Z"
 
 ## Important Notes
 
