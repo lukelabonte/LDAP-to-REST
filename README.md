@@ -2,6 +2,12 @@
 
 A cross-platform REST API that wraps Active Directory LDAP operations (user/group CRUD + membership management), deployable via Docker.
 
+## Overview
+
+LDAP-to-REST lets you query and manage Active Directory over plain HTTP instead of speaking the LDAP protocol directly. Point it at your AD server, and any tool that can make HTTP requests (scripts, frontends, other services) can look up users, manage group membership, and modify attributes — all through a familiar REST interface with JSON responses.
+
+There's no service account to configure. Every API request uses the caller's own AD credentials via Basic Auth, so permissions are enforced by AD itself. Run it as a Docker container in front of your domain controller and you're done.
+
 ## Features
 
 - **User management** — Find, view, and modify AD user attributes
@@ -200,6 +206,14 @@ docker run -p 8080:8080 \
 - **No credential storage**: Credentials are never stored — they're extracted from the HTTP header and used for a single LDAP bind per request.
 - **HTTPS recommended**: Basic Auth sends credentials in base64 (not encrypted). Always use HTTPS in production (terminate TLS at a reverse proxy or load balancer).
 - **Non-root Docker**: The container runs as a non-root user.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to build, test, and submit pull requests.
+
+## Security
+
+If you discover a security vulnerability, **do not open a public issue.** See [SECURITY.md](SECURITY.md) for how to report it privately.
 
 ## License
 

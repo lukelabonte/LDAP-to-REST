@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Setup & Configuration Help
+    url: https://github.com/lukelabonte/LDAP-to-REST#configuration
+    about: Check the README for configuration options and troubleshooting before opening an issue.
