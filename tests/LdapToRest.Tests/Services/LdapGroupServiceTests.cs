@@ -51,7 +51,9 @@ public class LdapGroupServiceTests
         var entry = new LdapEntry { DistinguishedName = dn };
         entry.SetAttribute("samaccountname", sam);
         entry.SetAttribute("displayname", displayName);
-        entry.SetAttribute("objectclass", objectClass);
+        // AD returns objectClass as a multi-valued attribute in hierarchy order:
+        // ["top", "person", "organizationalPerson", "user"] — we want the last (most specific) value
+        entry.SetAttribute("objectclass", "top", "person", "organizationalPerson", objectClass);
         return entry;
     }
 

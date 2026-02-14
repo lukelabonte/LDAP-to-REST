@@ -246,7 +246,7 @@ public class LdapGroupService : ILdapGroupService
             DistinguishedName = entry.DistinguishedName,
             SamAccountName = entry.GetAttribute("samaccountname"),
             DisplayName = entry.GetAttribute("displayname"),
-            ObjectClass = entry.GetAttribute("objectclass")
+            ObjectClass = entry.GetMultiValueAttribute("objectclass")?.LastOrDefault()
         };
     }
 }
