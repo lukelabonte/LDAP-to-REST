@@ -207,6 +207,10 @@ docker run -p 8080:8080 \
 - **HTTPS recommended**: Basic Auth sends credentials in base64 (not encrypted). Always use HTTPS in production (terminate TLS at a reverse proxy or load balancer).
 - **Non-root Docker**: The container runs as a non-root user.
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to build, test, and submit pull requests.

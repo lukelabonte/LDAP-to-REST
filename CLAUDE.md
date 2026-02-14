@@ -25,6 +25,11 @@ When adding, removing, or modifying any API endpoint or modifiable attribute:
 4. If adding/changing env vars, update the README Configuration table and `.env.example`
 5. Verify Swagger renders correctly at `/swagger` after changes
 
+## Releases
+- Invoke `/create-release` to start an interactive release — the skill walks through version selection, release notes curation, and handles tagging/pushing
+- CHANGELOG.md is owned entirely by the release skill — do not manually edit it
+- The `[Unreleased]` section stays empty during development; the release skill populates version entries from commits at release time
+
 ## Architecture
 - Pass-through Basic Auth: each request binds to AD with the caller's own credentials (no service account)
 - `ILdapConnection`/`LdapEntry`/`LdapConnectionAdapter` wraps `System.DirectoryServices.Protocols` because `SearchResponse`/`SearchResultEntry` are sealed and unmockable
