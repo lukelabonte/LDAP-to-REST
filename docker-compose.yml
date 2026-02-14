@@ -8,5 +8,7 @@ services:
       - LDAP_PORT=389
       - LDAP_BASE_DN=DC=example,DC=com
       - LDAP_USE_SSL=false
+      - LDAP_START_TLS=true
+      - LDAP_IGNORE_CERT_ERRORS=false
       - CORS_ALLOWED_ORIGINS=http://localhost:3000,https://app.example.com
     restart: unless-stopped

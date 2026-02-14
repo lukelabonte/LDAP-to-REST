@@ -14,12 +14,22 @@ var useSsl = bool.TryParse(Environment.GetEnvironmentVariable("LDAP_USE_SSL"), o
 var defaultPort = useSsl ? 636 : 389;
 var ldapPort = int.TryParse(Environment.GetEnvironmentVariable("LDAP_PORT"), out var port) ? port : defaultPort;
 
+var startTls = bool.TryParse(Environment.GetEnvironmentVariable("LDAP_START_TLS"), out var tls) && tls; // default false
+var ignoreCertErrors = bool.TryParse(Environment.GetEnvironmentVariable("LDAP_IGNORE_CERT_ERRORS"), out var ignoreCert) && ignoreCert;
+
+// On Linux, OpenLDAP's libldap ignores .NET's VerifyServerCertificate callback for StartTLS.
+// It reads LDAPTLS_REQCERT instead. Set it so LDAP_IGNORE_CERT_ERRORS works cross-platform.
+if (ignoreCertErrors)
+    Environment.SetEnvironmentVariable("LDAPTLS_REQCERT", "never");
+
 var ldapSettings = new LdapSettings
 {
     Host = ldapHost,
     Port = ldapPort,
     BaseDn = ldapBaseDn,
     UseSsl = useSsl,
+    StartTls = !useSsl && startTls, // StartTLS only applies when not using LDAPS
+    IgnoreCertErrors = ignoreCertErrors,
     CorsAllowedOrigins = Environment.GetEnvironmentVariable("CORS_ALLOWED_ORIGINS")
         ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
         ?? []

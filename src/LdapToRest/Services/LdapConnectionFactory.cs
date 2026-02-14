@@ -17,14 +17,20 @@ public class LdapConnectionFactory : ILdapConnectionFactory
     {
         var identifier = new LdapDirectoryIdentifier(_settings.Host, _settings.Port);
         var credential = new NetworkCredential(username, password);
-        var connection = new LdapConnection(identifier, credential);
+        var connection = new LdapConnection(identifier, credential, AuthType.Basic);
         connection.SessionOptions.ProtocolVersion = 3;
+        connection.SessionOptions.ReferralChasing = ReferralChasingOptions.None;
+        connection.AutoBind = false;
+
+        if (_settings.IgnoreCertErrors)
+            connection.SessionOptions.VerifyServerCertificate = (_, _) => true;
 
         if (_settings.UseSsl)
             connection.SessionOptions.SecureSocketLayer = true;
+        else if (_settings.StartTls)
+            connection.SessionOptions.StartTransportLayerSecurity(null);
 
-        connection.AuthType = AuthType.Basic;
-        connection.Bind();
+        connection.Bind(credential);
         return new LdapConnectionAdapter(connection);
     }
 }

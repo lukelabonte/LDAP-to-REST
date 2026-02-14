@@ -6,5 +6,7 @@ public class LdapSettings
     public int Port { get; set; }
     public string BaseDn { get; set; } = string.Empty;
     public bool UseSsl { get; set; }
+    public bool StartTls { get; set; }
+    public bool IgnoreCertErrors { get; set; }
     public string[] CorsAllowedOrigins { get; set; } = [];
 }

@@ -44,6 +44,29 @@ public class ExceptionHandlingMiddleware
                 Detail = ex.Message
             });
         }
+        catch (DirectoryOperationException ex)
+        {
+            _logger.LogError(ex, "LDAP directory operation failed");
+
+            // Parse AD error codes from the message (e.g., "000004DC" = bind required)
+            var statusCode = 500;
+            var message = "LDAP operation failed";
+
+            if (ex.Message.Contains("000004DC") || ex.Message.Contains("successful bind must be completed"))
+            {
+                statusCode = 401;
+                message = "Authentication failed — LDAP bind was not completed";
+            }
+
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(new ErrorResponse
+            {
+                Status = statusCode,
+                Message = message,
+                Detail = ex.Message
+            });
+        }
         catch (ArgumentException ex)
         {
             context.Response.StatusCode = 400;

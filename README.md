@@ -33,7 +33,9 @@ All configuration is via environment variables — no config files needed.
 | `LDAP_HOST` | Yes | — | AD server hostname |
 | `LDAP_PORT` | No | 636 (SSL) / 389 (no SSL) | LDAP port |
 | `LDAP_BASE_DN` | Yes | — | Base DN for searches (e.g., `DC=example,DC=com`) |
-| `LDAP_USE_SSL` | No | `false` | Enable LDAPS |
+| `LDAP_USE_SSL` | No | `false` | Enable LDAPS (port 636) |
+| `LDAP_START_TLS` | No | `false` | Upgrade to TLS on port 389 before binding (ignored if `LDAP_USE_SSL=true`) |
+| `LDAP_IGNORE_CERT_ERRORS` | No | `false` | Accept untrusted TLS certificates (development only) |
 | `CORS_ALLOWED_ORIGINS` | No | *(disabled)* | Comma-separated allowed origins |
 
 ## API Reference
