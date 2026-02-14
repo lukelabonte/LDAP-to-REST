@@ -46,11 +46,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "LDAP-to-REST API",
+        Version = "v1",
+        Description = "A REST API that wraps Active Directory LDAP operations. "
+                    + "Supports user and group lookups, attribute modifications, and group membership management.\n\n"
+                    + "**Authentication:** Every request requires Basic Auth (`Authorization: Basic <base64>`). "
+                    + "Your AD credentials are passed through to bind to the directory on each request — "
+                    + "there is no service account. You can only see and modify what your AD permissions allow.\n\n"
+                    + "**SamAccountName:** The short login name in Active Directory (e.g., `jsmith` for a user, "
+                    + "`developers` for a group). This is the primary identifier used in most endpoints.\n\n"
+                    + "**Distinguished Name (DN):** The full LDAP path to an object "
+                    + "(e.g., `CN=John Smith,OU=Users,DC=example,DC=com`). Used for precise lookups and when adding members to groups."
+    });
+
     options.AddSecurityDefinition("Basic", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.Http,
         Scheme = "basic",
-        Description = "Active Directory credentials (DOMAIN\\username and password)"
+        Description = "Active Directory credentials. Enter your AD username (e.g., DOMAIN\\username or username@domain.com) and password. "
+                    + "These are passed directly to the AD server to authenticate each request."
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -67,6 +83,11 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
+
+    // Include XML doc comments from controllers and models
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
 });
 
 // --- Authentication ---
